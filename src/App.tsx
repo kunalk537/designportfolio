@@ -472,7 +472,7 @@ function CurrentExperienceCard() {
 /* -------------------------------------------------------------------------- */
 /*  Hero                                                                      */
 /* -------------------------------------------------------------------------- */
-function Hero() {
+function Hero({ onCopyEmail }: { onCopyEmail: () => void | Promise<void> }) {
   const { name, intro, focus, headline, links } = profile
   const ref = useReveal<HTMLDivElement>()
   const { shown, done } = useTypewriter(intro, { speed: 16, startDelay: 320 })
@@ -513,12 +513,16 @@ function Hero() {
         </div>
 
         <div className="hero__cta-row">
-          <a className="btn btn--primary" href={links.emailHref}>
+          <button
+            type="button"
+            className="btn btn--primary"
+            onClick={() => void onCopyEmail()}
+          >
             Get in touch
             <span className="btn__arrow" aria-hidden>
               →
             </span>
-          </a>
+          </button>
           {links.resume ? (
             <a
               className="btn btn--ghost"
@@ -689,7 +693,7 @@ export default function App() {
           <Nav />
 
           <main id="top">
-            <Hero />
+            <Hero onCopyEmail={copyEmailToClipboard} />
 
             <header className="section-heading">
               <h2 className="section-heading__title">Selected work</h2>
