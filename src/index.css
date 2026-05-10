@@ -66,33 +66,6 @@ a {
   text-decoration: none;
 }
 
-/* Skip link — visually hidden until focused via keyboard. Lets screen-reader
-   and keyboard users jump past the nav into the page content. */
-.skip-link {
-  position: fixed;
-  top: 0.6rem;
-  left: 50%;
-  transform: translate(-50%, -120%);
-  z-index: 200;
-  padding: 0.55rem 0.95rem;
-  background: rgb(var(--paper-ink));
-  color: rgb(var(--paper));
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  border-radius: 8px;
-  box-shadow: 0 8px 22px rgba(35, 38, 45, 0.22);
-  transition: transform 0.18s ease;
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  transform: translate(-50%, 0);
-  outline: 2px solid rgb(var(--brand));
-  outline-offset: 3px;
-}
-
 /* ======================================================
    Paper background (fixed, full viewport)
    ====================================================== */

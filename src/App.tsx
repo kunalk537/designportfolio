@@ -682,10 +682,6 @@ export default function App() {
         </div>
       ) : null}
 
-      <a className="skip-link" href="#top">
-        Skip to content
-      </a>
-
       <div className="paper-bg" aria-hidden />
 
       <div className="app-above-paper">
