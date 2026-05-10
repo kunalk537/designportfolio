@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace with your deployed URL after first deploy
-Sitemap: https://kunalkaushik.dev/sitemap.xml
+Sitemap: https://kunalkaushik.vercel.app/sitemap.xml
