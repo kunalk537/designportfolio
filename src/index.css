@@ -191,18 +191,11 @@ a {
    Bubble navbar — bigger, links only, centered
    ====================================================== */
 .nav-bubble-wrap {
-  position: sticky;
-  top: 1rem;
+  position: relative;
   z-index: 30;
   margin-bottom: 2.75rem;
   display: flex;
   justify-content: center;
-}
-
-@media (min-width: 640px) {
-  .nav-bubble-wrap {
-    top: 1.25rem;
-  }
 }
 
 .nav-bubble {
