@@ -121,4 +121,19 @@ export const projects: Project[] = [
       'Stack: Schematic Design, Component Selection, EasyEDA, ESP32, MPU9050, OLED Display, USB-C Connector, Li-ion Battery, TP4056 Charger, 3D-printed Case',
     ],
   },
+  {
+    id: 'sensorarray',
+    title: 'ESP32 Breakout Board: Sensors + Motors',
+    summary:
+      'MicroUSB for power, H-bridge motor driver, PWM Servo Port, 9-axis IMU for positional feedback.',
+    tags: ['Embedded', 'PCB Design', 'Motor Control', 'I2C', 'C/C++', 'Soldering', '4-layer'],
+    media: ['/rumble1.png', '/rumble2.png'],
+    paragraphs: [
+      'Powered by a microUSB connector, with 5V battery and LDO to step down to 1.8V for IMU logic levels; ESP32 and servo both at 3.3V.',
+      'ESP32 serial communication empowered directly through the devboard; initialized with Wi-fi setup to enable wireless flashing and code improvements.',
+      'H-bridge motor driver for motor control enables basic speed and direction control; used with cheaper motors so IMU serves as encoder replacement to guarantee motion.',
+      '4-layer board (signal, ground, 3.3V, signal) to minimize EMI and maintain impedance, using JLCPCB and component selection through LCSC parts.',
+      'Stack: Embedded, PCB Design, Motor Control, I2C, C/C++, Soldering, 4-layer',
+    ],
+  },
 ]
