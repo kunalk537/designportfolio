@@ -1,739 +1,252 @@
-import {
-  Suspense,
-  lazy,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
-import type { ReactNode } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { profile } from './content/profile'
-import { projects, type MediaInput } from './content/projects'
-import type { LightboxState, MediaItem } from './ui/types'
+import { projects, type MediaInput, type Project } from './content/projects'
 
-// Code-split the lightbox: it only mounts after a click, so users who don't
-// open it never download its JS.
-const Lightbox = lazy(() => import('./ui/Lightbox'))
-
-const VIDEO_RE = /\.(mp4|webm|mov|m4v|ogg|ogv)(\?.*)?$/i
-
-function detectMediaType(src: string): 'image' | 'video' {
-  return VIDEO_RE.test(src) ? 'video' : 'image'
-}
-
-function normalizeMedia(input: readonly MediaInput[] | undefined): MediaItem[] {
-  if (!input) return []
-  return input.map((it) => {
-    if (typeof it === 'string') {
-      return { src: it, type: detectMediaType(it) }
-    }
-    return {
-      src: it.src,
-      type: it.type ?? detectMediaType(it.src),
-      caption: it.caption,
-      poster: it.poster,
-      alt: it.alt,
-    }
-  })
-}
-
-/* -------------------------------------------------------------------------- */
-/*  useReveal — fade/slide elements in when they enter view                   */
-/* -------------------------------------------------------------------------- */
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null)
-
+function Handwriting({ children }: { children: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     const node = ref.current
     if (!node) return
-    if (
-      typeof window === 'undefined' ||
-      typeof IntersectionObserver === 'undefined'
-    ) {
-      node.classList.add('is-visible')
-      return
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        }
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -10% 0px' },
-    )
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        node.classList.add('is-written')
+        observer.disconnect()
+      }
+    }, { threshold: 0.6 })
     observer.observe(node)
     return () => observer.disconnect()
   }, [])
-
-  return ref
+  return <span ref={ref} className="handwriting" aria-label={children}>{children.split(/(\s+)/).map((word, wordIndex, words) => <span className="written-word" key={wordIndex} aria-hidden="true">{Array.from(word).map((letter, letterIndex) => <span className="written-letter" key={letterIndex} style={{ '--letter-delay': `${(words.slice(0, wordIndex).join('').length + letterIndex) * 38}ms` } as CSSProperties}>{letter}</span>)}</span>)}</span>
 }
 
-/* -------------------------------------------------------------------------- */
-/*  useTypewriter — types out text one character at a time                    */
-/* -------------------------------------------------------------------------- */
-function useTypewriter(
-  text: string,
-  { speed = 18, startDelay = 350 }: { speed?: number; startDelay?: number } = {},
-) {
-  const [shown, setShown] = useState('')
-  const [done, setDone] = useState(false)
+function normalize(item: MediaInput) {
+  const media = typeof item === 'string' ? { src: item } : item
+  return { ...media, video: media.type === 'video' || /\.(mp4|webm|mov|m4v|ogg|ogv)(\?.*)?$/i.test(media.src) }
+}
 
+function QuietVideo({ src, poster, label, active, onRatio }: { src: string; poster?: string; label: string; active: boolean; onRatio: (value: number) => void }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
   useEffect(() => {
-    let i = 0
-    let nextTimer: number | undefined
-
-    const tick = () => {
-      i += 1
-      setShown(text.slice(0, i))
-      if (i < text.length) {
-        nextTimer = window.setTimeout(tick, speed)
-      } else {
-        setDone(true)
-      }
-    }
-
-    setShown('')
-    setDone(false)
-    const startTimer = window.setTimeout(tick, startDelay)
-
-    return () => {
-      window.clearTimeout(startTimer)
-      if (nextTimer) window.clearTimeout(nextTimer)
-    }
-  }, [text, speed, startDelay])
-
-  return { shown, done }
+    const video = ref.current
+    if (!video) return
+    if (active) video.play().catch(() => {})
+    else video.pause()
+  }, [active])
+  return <button type="button" className={`quiet-video ${playing ? 'is-playing' : ''}`} aria-label={`${playing ? 'Pause' : 'Play'} ${label}`} onClick={() => {
+    const video = ref.current
+    if (!video) return
+    if (video.paused) video.play().catch(() => {})
+    else video.pause()
+  }}>
+    <video ref={ref} src={src} poster={poster} muted loop playsInline preload={active ? 'auto' : 'metadata'} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onLoadedMetadata={event => onRatio(event.currentTarget.videoWidth / event.currentTarget.videoHeight)} />
+    <span className="video-toggle" aria-hidden="true">{playing ? 'Ⅱ pause' : '▶ play'}</span>
+  </button>
 }
 
-/* -------------------------------------------------------------------------- */
-/*  MediaSlot — single image or video tile                                    */
-/* -------------------------------------------------------------------------- */
-const MediaSlot = memo(function MediaSlot({
-  item,
-  index,
-  items,
-  fallbackAlt,
-  eager = false,
-  onOpen,
-}: {
-  item: MediaItem
-  index: number
-  items: MediaItem[]
-  fallbackAlt: string
-  eager?: boolean
-  onOpen: (state: NonNullable<LightboxState>) => void
-}) {
-  const alt = item.alt ?? fallbackAlt
-  const isVideo = item.type === 'video'
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-
-  const handleZoom = () => {
-    if (videoRef.current) videoRef.current.pause()
-    onOpen({ items, index })
+function Carousel({ items, title, active }: { items: MediaInput[]; title: string; active: boolean }) {
+  const [index, setIndex] = useState(0)
+  const [ratios, setRatios] = useState<Record<string, number>>({})
+  const [width, setWidth] = useState(400)
+  const [zoomOpen, setZoomOpen] = useState(false)
+  const container = useRef<HTMLDivElement>(null)
+  const dialog = useRef<HTMLDialogElement>(null)
+  const previousOverflow = useRef('')
+  const zoomOpener = useRef<HTMLElement | null>(null)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const swiped = useRef(false)
+  const media = normalize(items[index])
+  const ratio = ratios[media.src] ?? 4 / 3
+  const frameWidth = Math.min(width, 390 * ratio + 22)
+  const frameHeight = (frameWidth - 22) / ratio
+  const move = (direction: number) => setIndex(current => (current + direction + items.length) % items.length)
+  const openZoom = () => {
+    if (swiped.current) { swiped.current = false; return }
+    zoomOpener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    container.current?.querySelectorAll('video').forEach(video => video.pause())
+    previousOverflow.current = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    setZoomOpen(true)
+    dialog.current?.showModal()
   }
+  const rememberRatio = (src: string, value: number) => {
+    if (value > 0) setRatios(current => current[src] === value ? current : { ...current, [src]: value })
+  }
+  useEffect(() => {
+    const node = container.current
+    const zoomDialog = dialog.current
+    if (!node) return
+    const resize = new ResizeObserver(entries => setWidth(entries[0].contentRect.width))
+    const preloaded: HTMLImageElement[] = []
+    resize.observe(node)
+    const preload = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return
+      items.forEach(item => {
+        const media = normalize(item)
+        // A poster can have a different crop from its video. Video metadata
+        // supplies the actual frame ratio instead.
+        const src = media.video ? undefined : media.src
+        if (!src) return
+        const image = new Image()
+        preloaded.push(image)
+        image.onload = () => rememberRatio(media.src, image.naturalWidth / image.naturalHeight)
+        image.src = src
+      })
+      preload.disconnect()
+    }, { rootMargin: '400px' })
+    preload.observe(node)
+    return () => {
+      resize.disconnect()
+      preload.disconnect()
+      preloaded.forEach(image => { image.onload = null })
+      if (zoomDialog?.open) document.body.style.overflow = previousOverflow.current
+    }
+  }, [items])
+  useEffect(() => {
+    container.current?.querySelectorAll<HTMLVideoElement>('[aria-hidden="true"] video').forEach(video => video.pause())
+  }, [index])
 
-  const className = [
-    'card-image-frame',
-    isVideo ? 'card-image-frame--video' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')
+  const controls = (location: string): ReactNode => items.length > 1 && <div className="carousel-controls">
+    <button type="button" onClick={() => move(-1)} aria-label={`Previous ${location} image for ${title}`}>←</button>
+    <div className="carousel-dots">{items.map((_, dotIndex) => <button type="button" key={dotIndex} aria-label={`Show ${title} ${location} view ${dotIndex + 1}`} aria-pressed={index === dotIndex} onClick={() => setIndex(dotIndex)}><span aria-hidden="true" /></button>)}</div>
+    <span className="carousel-counter" aria-live="polite" aria-atomic="true">{index + 1} / {items.length}</span>
+    <button type="button" onClick={() => move(1)} aria-label={`Next ${location} image for ${title}`}>→</button>
+  </div>
 
-  return (
-    <div className={className}>
-      {isVideo ? (
-        // preload="metadata" so the browser pulls just enough (typically a few
-        // hundred KB out of the full file) to show a first-frame preview and
-        // duration. The full video still doesn't download until the user
-        // clicks play.
-        <video
-          ref={videoRef}
-          className="card-video"
-          src={item.src}
-          poster={item.poster}
-          controls
-          preload="metadata"
-          playsInline
-          aria-label={alt}
-        />
-      ) : (
-        <img
-          src={item.src}
-          alt={alt}
-          decoding="async"
-          loading={eager ? 'eager' : 'lazy'}
-          {...(eager
-            ? ({ fetchpriority: 'high' } as Record<string, string>)
-            : {})}
-        />
-      )}
-      <button
-        type="button"
-        className="card-image-frame__zoom"
-        onClick={handleZoom}
-        aria-label={`Look closer at ${alt}`}
-      >
-        <svg
-          width="13"
-          height="13"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <path d="M3 9V3h6" />
-          <path d="M21 9V3h-6" />
-          <path d="M3 15v6h6" />
-          <path d="M21 15v6h-6" />
-        </svg>
-        <span>Look closer</span>
+  return <div ref={container} className="carousel" role="region" aria-roledescription="carousel" aria-label={`${title} images`} tabIndex={items.length > 1 ? 0 : undefined}
+    onKeyDown={event => {
+      if (event.target !== event.currentTarget) return
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') { event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1) }
+    }}
+    onTouchStart={event => {
+      swiped.current = false
+      touchStart.current = (event.target as Element).closest('video, button:not(.zoom-trigger)') ? null : { x: event.touches[0].clientX, y: event.touches[0].clientY }
+    }}
+    onTouchEnd={event => {
+      if (touchStart.current === null) return
+      const difference = touchStart.current.x - event.changedTouches[0].clientX
+      const vertical = touchStart.current.y - event.changedTouches[0].clientY
+      if (Math.abs(difference) > 45 && Math.abs(difference) > Math.abs(vertical)) { swiped.current = true; move(difference > 0 ? 1 : -1) }
+      touchStart.current = null
+    }}>
+    <div className="photo-print" style={{ width: frameWidth }}>
+      <span className="photo-tape" aria-hidden="true" />
+      <div className="slide-window" style={{ height: frameHeight }}>
+        {items.map((item, slideIndex) => {
+          const slide = normalize(item)
+          return <div className={`carousel-slide ${slideIndex === index ? 'is-active' : ''}`} key={slide.src} aria-hidden={slideIndex !== index} inert={slideIndex !== index}>
+            {slide.video
+              ? <QuietVideo src={slide.src} poster={slide.poster} label={slide.alt ?? `${title} demonstration`} active={active && !zoomOpen && slideIndex === index} onRatio={value => rememberRatio(slide.src, value)} />
+              : <button type="button" className="zoom-trigger" onClick={openZoom} aria-label={`Zoom in on ${title}, view ${slideIndex + 1}`}><img src={slide.src} alt={slide.alt ?? `${title}, view ${slideIndex + 1}`} decoding="async" loading="lazy" onLoad={event => rememberRatio(slide.src, event.currentTarget.naturalWidth / event.currentTarget.naturalHeight)} /><span className="zoom-affordance" aria-hidden="true">⤢ click to zoom</span></button>}
+          </div>
+        })}
+      </div>
+      <p className="photo-caption">{media.caption ?? (media.video ? 'click video to pause / play' : `${title} — ${index + 1}`)}</p>
+    </div>
+    {media.video && <button className="video-zoom" type="button" onClick={openZoom}>⤢ enlarge video</button>}
+    {controls('carousel')}
+    <dialog ref={dialog} className="zoom-dialog" style={{ '--media-ratio': ratio } as CSSProperties} aria-label={`${title} enlarged view`}
+      onClose={() => {
+        setZoomOpen(false)
+        dialog.current?.querySelectorAll('video').forEach(video => video.pause())
+        document.body.style.overflow = previousOverflow.current
+        const opener = zoomOpener.current
+        if (opener?.isConnected && !opener.closest('[inert]')) opener.focus({ preventScroll: true })
+        else container.current?.focus({ preventScroll: true })
+      }}
+      onClick={event => { if (event.target === event.currentTarget) dialog.current?.close() }}
+      onKeyDown={event => {
+        if ((event.target as Element).closest('video')) return
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') { event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1) }
+      }}>
+      <div className="zoom-sheet">
+        <div className="zoom-header"><span>{title}</span><button type="button" onClick={() => dialog.current?.close()} aria-label="Close enlarged view">close ×</button></div>
+        <div className="zoom-window">{items.map((item, slideIndex) => {
+          const slide = normalize(item)
+          return <div className={`carousel-slide ${slideIndex === index ? 'is-active' : ''}`} key={slide.src} aria-hidden={slideIndex !== index} inert={slideIndex !== index}>
+            {slide.video ? <QuietVideo src={slide.src} poster={slide.poster} label={`${slide.alt ?? title}, enlarged`} active={zoomOpen && slideIndex === index} onRatio={value => rememberRatio(slide.src, value)} /> : <img src={slide.src} alt={slide.alt ?? title} decoding="async" loading="lazy" />}
+          </div>
+        })}</div>
+        {controls('enlarged')}
+      </div>
+    </dialog>
+  </div>
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const [expanded, setExpanded] = useState(false)
+  const upcoming = project.status === 'coming-soon'
+  return <article className={`project-card ${upcoming ? 'is-upcoming' : ''} ${expanded ? 'is-expanded' : ''}`} aria-labelledby={`title-${project.id}`}>
+    <div className="project-kicker"><span className="project-number">{String(index + 1).padStart(2, '0')}</span><span>{project.category}</span>{upcoming && <span className="coming-soon">coming soon</span>}</div>
+    {upcoming ? <h3 id={`title-${project.id}`}><Handwriting>{project.title}</Handwriting></h3> : <>
+      <button className="project-toggle" type="button" aria-expanded={expanded} aria-controls={`details-${project.id}`} onClick={() => setExpanded(value => !value)}>
+        <span><h3 id={`title-${project.id}`}><Handwriting>{project.title}</Handwriting></h3><span className="project-teaser">{project.outcome ?? project.summary}</span></span>
+        <span className="project-open-hint">{expanded ? 'close notes −' : 'open notes +'}<span aria-hidden="true">↙</span></span>
       </button>
-    </div>
-  )
-})
-
-const MediaPlaceholder = memo(function MediaPlaceholder() {
-  return (
-    <div className="card-image-frame card-image-frame--placeholder">
-      <div className="card-image-placeholder" aria-hidden>
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <circle cx="9" cy="9" r="2" />
-          <path d="m21 15-5-5L5 21" />
-        </svg>
-        <span>Figure</span>
+      <div className="project-reveal" id={`details-${project.id}`} inert={!expanded}>
+        <div className="project-reveal-inner"><div className="project-details">
+          <div className="project-copy"><p className="project-summary">{project.summary}</p>
+            {project.highlights?.length ? <ul className="highlights">{project.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul> : null}
+            {project.links?.length ? <div className="project-links">{project.links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a>)}</div> : null}
+          </div>
+          {project.media.length > 0 && <Carousel items={project.media} title={project.title} active={expanded} />}
+        </div></div>
       </div>
-    </div>
-  )
-})
-
-/* -------------------------------------------------------------------------- */
-/*  MediaGallery — full-width stack; scrollable when >2 items                 */
-/* -------------------------------------------------------------------------- */
-const MediaGallery = memo(function MediaGallery({
-  items,
-  fallbackAltBase,
-  projectTitle,
-  eager = false,
-  onOpen,
-}: {
-  items: MediaItem[]
-  fallbackAltBase: string
-  projectTitle: string
-  eager?: boolean
-  onOpen: (state: NonNullable<LightboxState>) => void
-}) {
-  const scrollRef = useRef<HTMLDivElement | null>(null)
-  const isScrollable = items.length > 2
-  const [moreAvailable, setMoreAvailable] = useState(false)
-
-  useEffect(() => {
-    if (!isScrollable) {
-      setMoreAvailable(false)
-      return
-    }
-    const el = scrollRef.current
-    if (!el) return
-
-    const update = () => {
-      const remaining = el.scrollHeight - el.clientHeight - el.scrollTop
-      setMoreAvailable(remaining > 8)
-    }
-
-    update()
-    el.addEventListener('scroll', update, { passive: true })
-    const ro =
-      typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver(update)
-        : null
-    ro?.observe(el)
-    window.addEventListener('resize', update)
-
-    return () => {
-      el.removeEventListener('scroll', update)
-      ro?.disconnect()
-      window.removeEventListener('resize', update)
-    }
-  }, [isScrollable, items.length])
-
-  if (items.length === 0) {
-    return (
-      <div className="project-card__media-stack">
-        <MediaPlaceholder />
-        <MediaPlaceholder />
-      </div>
-    )
-  }
-
-  const handleOpen = (state: NonNullable<LightboxState>) =>
-    onOpen({ ...state, projectTitle })
-
-  const slots = items.map((it, i) => (
-    <MediaSlot
-      key={`media-${i}-${it.src}`}
-      item={it}
-      index={i}
-      items={items}
-      fallbackAlt={`${fallbackAltBase} — figure ${i + 1}`}
-      eager={eager && i === 0 && it.type === 'image'}
-      onOpen={handleOpen}
-    />
-  ))
-
-  if (!isScrollable) {
-    return <div className="project-card__media-stack">{slots}</div>
-  }
-
-  const scrollMore = () => {
-    const el = scrollRef.current
-    if (!el) return
-    el.scrollBy({
-      top: Math.round(el.clientHeight * 0.7),
-      behavior: 'smooth',
-    })
-  }
-
-  return (
-    <div className="project-card__media-stack-wrap">
-      <div className="project-card__media-frame">
-        <div
-          ref={scrollRef}
-          className={`project-card__media-stack project-card__media-stack--scrollable${
-            moreAvailable ? '' : ' is-end'
-          }`}
-        >
-          {slots}
-        </div>
-
-        <button
-          type="button"
-          onClick={scrollMore}
-          className={`media-scroll-hint${
-            moreAvailable ? '' : ' media-scroll-hint--hidden'
-          }`}
-          aria-label="Scroll to see more media"
-          tabIndex={moreAvailable ? 0 : -1}
-        >
-          <span>Scroll for more</span>
-          <svg
-            className="media-scroll-hint__arrow"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M12 5v14" />
-            <path d="m19 12-7 7-7-7" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  )
-})
-
-/* -------------------------------------------------------------------------- */
-/*  Nav — bigger, links only                                                  */
-/* -------------------------------------------------------------------------- */
-const NavLink = memo(function NavLink({
-  href,
-  children,
-  external,
-  cta,
-}: {
-  href: string
-  children: ReactNode
-  external?: boolean
-  cta?: boolean
-}) {
-  return (
-    <a
-      className={
-        cta ? 'nav-bubble__link nav-bubble__link--cta' : 'nav-bubble__link'
-      }
-      href={href}
-      {...(external ? ({ target: '_blank', rel: 'noreferrer' } as const) : {})}
-    >
-      {children}
-    </a>
-  )
-})
-
-const Nav = memo(function Nav() {
-  const { links } = profile
-  return (
-    <div className="nav-bubble-wrap">
-      <nav className="nav-bubble" aria-label="Primary">
-        {links.linkedin ? (
-          <NavLink href={links.linkedin} external>
-            LinkedIn
-          </NavLink>
-        ) : null}
-        {links.github ? (
-          <NavLink href={links.github} external>
-            GitHub
-          </NavLink>
-        ) : null}
-        {links.resume ? (
-          <NavLink href={links.resume} external>
-            Resume
-          </NavLink>
-        ) : null}
-        <NavLink href={links.emailHref} cta>
-          Contact
-        </NavLink>
-      </nav>
-    </div>
-  )
-})
-
-/* -------------------------------------------------------------------------- */
-/*  Aside cards: Education + Availability                                     */
-/* -------------------------------------------------------------------------- */
-const EducationCard = memo(function EducationCard() {
-  const { education } = profile
-  return (
-    <div className="aside-card">
-      <span className="aside-card__label">Education</span>
-      <div className="education__row">
-        <span className="education__school">{education.school}</span>
-        <span className="education__period">{education.period}</span>
-      </div>
-      <div className="education__degree">{education.degree}</div>
-      {education.detail ? (
-        <div className="education__detail">{education.detail}</div>
-      ) : null}
-    </div>
-  )
-})
-
-const AvailabilityCard = memo(function AvailabilityCard() {
-  const { availability } = profile
-  return (
-    <div className="aside-card">
-      <span className="aside-card__label aside-card__label--live">
-        Availability
-      </span>
-      <div className="availability__status">{availability.status}</div>
-      <p className="availability__detail">{availability.detail}</p>
-    </div>
-  )
-})
-
-/*
-function CurrentExperienceCard() {
-  const { currentExperience } = profile
-  return (
-    <div className="aside-card">
-      <span className="aside-card__label aside-card__label--live">
-        Current
-      </span>
-      <div className="current__role">{currentExperience.role}</div>
-      <div className="current__org-row">
-        <span className="current__org">{currentExperience.org}</span>
-        <span className="current__period">{currentExperience.period}</span>
-      </div>
-      <p className="current__summary">{currentExperience.summary}</p>
-      {currentExperience.tags?.length ? (
-        <div className="current__tags">
-          {currentExperience.tags.map((t) => (
-            <span key={t} className="tag-mini">
-              {t}
-            </span>
-          ))}
-        </div>
-      ) : null}
-    </div>
-  )
-}
-*/
-/* -------------------------------------------------------------------------- */
-/*  Hero                                                                      */
-/* -------------------------------------------------------------------------- */
-function Hero({ onCopyEmail }: { onCopyEmail: () => void | Promise<void> }) {
-  const { name, intro, focus, headline, links } = profile
-  const ref = useReveal<HTMLDivElement>()
-  const { shown, done } = useTypewriter(intro, { speed: 16, startDelay: 320 })
-
-  const [first, ...rest] = name.split(' ')
-  const last = rest.join(' ')
-
-  return (
-    <section ref={ref} className="hero reveal">
-      <div className="hero__main">
-        <span className="hero__eyebrow">
-          Available for opportunities · {headline}
-        </span>
-
-        <h1 className="hero__name">
-          {first}
-          {last ? (
-            <>
-              {' '}
-              <span className="hero__name-italic">{last}</span>
-            </>
-          ) : null}
-        </h1>
-
-        <p className="hero__intro" aria-label={intro}>
-          <span aria-hidden>{shown}</span>
-          {!done ? (
-            <span className="hero__intro-cursor" aria-hidden />
-          ) : null}
-        </p>
-
-        <div className="hero__focus">
-          {focus.map((f) => (
-            <span key={f} className="focus-chip">
-              {f}
-            </span>
-          ))}
-        </div>
-
-        <div className="hero__cta-row">
-          <button
-            type="button"
-            className="btn btn--primary"
-            onClick={() => void onCopyEmail()}
-          >
-            Get in touch
-            <span className="btn__arrow" aria-hidden>
-              →
-            </span>
-          </button>
-          {links.resume ? (
-            <a
-              className="btn btn--ghost"
-              href={links.resume}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View resume
-            </a>
-          ) : null}
-        </div>
-      </div>
-
-      <aside className="hero__aside">
-        <EducationCard />
-        <AvailabilityCard />
-      </aside>
-    </section>
-  )
+    </>}
+  </article>
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Project card                                                              */
-/* -------------------------------------------------------------------------- */
-const ProjectCard = memo(function ProjectCard({
-  index,
-  total,
-  project,
-  onOpenMedia,
-  onCopyEmail,
-}: {
-  index: number
-  total: number
-  project: (typeof projects)[number]
-  onOpenMedia: (state: NonNullable<LightboxState>) => void
-  onCopyEmail: () => void | Promise<void>
-}) {
-  const ref = useReveal<HTMLDivElement>()
-  const numLabel = String(index + 1).padStart(2, '0')
-  const totalLabel = String(total).padStart(2, '0')
-  const items = useMemo(() => normalizeMedia(project.media), [project.media])
-
-  return (
-    <div ref={ref} className="reveal">
-      <article
-        className="project-card"
-        data-i={index}
-        aria-labelledby={`project-${project.id}-title`}
-      >
-        <span className="project-card__tape" aria-hidden />
-        <span className="project-card__index">
-          {numLabel} / {totalLabel}
-        </span>
-
-        <div className="project-card__grid">
-          <div className="project-card__media">
-            <MediaGallery
-              items={items}
-              fallbackAltBase={project.title}
-              projectTitle={project.title}
-              eager={index === 0}
-              onOpen={onOpenMedia}
-            />
-          </div>
-
-          <div className="project-card__content">
-            <h3
-              id={`project-${project.id}-title`}
-              className="project-card__title"
-            >
-              {project.title}
-            </h3>
-            <p className="project-card__summary">{project.summary}</p>
-
-            {project.tags.length ? (
-              <div className="project-card__tags">
-                {project.tags.map((t) => (
-                  <span key={t} className="tag">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-
-            <div className="project-card__body">
-              {project.paragraphs.map((p, i) => (
-                <p key={`${project.id}-${i}`}>{p}</p>
-              ))}
-            </div>
-
-            <div className="project-card__footer">
-              <span className="project-card__meta">Project {numLabel}</span>
-              <button
-                type="button"
-                className="project-card__cta"
-                onClick={() => void onCopyEmail()}
-              >
-                Email me about this
-                <span className="project-card__cta-arrow" aria-hidden>
-                  →
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-  )
-})
-
-/* -------------------------------------------------------------------------- */
-/*  App                                                                       */
-/* -------------------------------------------------------------------------- */
 export default function App() {
-  const [lightbox, setLightbox] = useState<LightboxState>(null)
-  const [copyToast, setCopyToast] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!copyToast) return
-    const id = window.setTimeout(() => setCopyToast(null), 4200)
-    return () => window.clearTimeout(id)
-  }, [copyToast])
-
-  const copyEmailToClipboard = useCallback(async () => {
-    const email = profile.links.email
-    try {
-      await navigator.clipboard.writeText(email)
-      setCopyToast(`${email} copied to clipboard.`)
-    } catch {
-      setCopyToast(`Couldn't copy — ${email}`)
-    }
-  }, [])
-
-  const closeLightbox = useCallback(() => setLightbox(null), [])
-  const openLightbox = useCallback(
-    (state: NonNullable<LightboxState>) => setLightbox(state),
-    [],
-  )
-  const goPrev = useCallback(() => {
-    setLightbox((s) => {
-      if (!s) return s
-      if (s.index <= 0) return s
-      return { ...s, index: s.index - 1 }
-    })
-  }, [])
-  const goNext = useCallback(() => {
-    setLightbox((s) => {
-      if (!s) return s
-      if (s.index >= s.items.length - 1) return s
-      return { ...s, index: s.index + 1 }
-    })
-  }, [])
-
-  const year = useMemo(() => new Date().getFullYear(), [])
-
-  return (
-    <>
-      {copyToast ? (
-        <div className="copy-toast" role="status" aria-live="polite">
-          {copyToast}
+  return <>
+    <div className="notebook-binding" aria-hidden="true" />
+    <a className="skip-link" href="#work">Skip to projects</a>
+    <main className="page">
+      <header className="intro">
+        <div className="intro-main">
+          <h1><Handwriting>{profile.name}</Handwriting><svg className="name-underline" viewBox="0 0 400 15" fill="none" aria-hidden="true"><path d="M4 9C84 1 175 14 263 6S366 5 395 8M28 13C123 9 240 14 347 11" /></svg></h1>
+          <aside className="right-now" aria-label="Right now">
+            <h2>Right now <span aria-hidden="true">↘</span></h2>
+            <dl>
+              <div><dt>studying</dt><dd>Electrical engineering at UIUC</dd></div>
+              <div><dt>age</dt><dd>{profile.age} years old</dd></div>
+              <div className="current-book"><dt>current book</dt><dd>
+                <details className="book-details">
+                  <summary>{profile.book.title}<span className="book-toggle" aria-hidden="true">⌄</span><small>{profile.book.author}</small></summary>
+                  <div className="book-preview" aria-label={`${profile.book.title} by ${profile.book.author}`}>
+                    <div className="book-cover" aria-hidden="true"><span>{profile.book.title}</span><small>{profile.book.author}</small></div>
+                    <span className="book-note">currently reading<span aria-hidden="true"> ↙</span></span>
+                  </div>
+                </details>
+              </dd></div>
+              <div className="song"><dt><span className="music-motion" aria-hidden="true"><i /><i /><i /><i /></span>song of the day</dt><dd>{profile.song.title ? <>{profile.song.href ? <a href={profile.song.href} target="_blank" rel="noreferrer">{profile.song.title} ↗</a> : profile.song.title}<small>{profile.song.artist}</small></> : 'Taking recommendations'}</dd></div>
+            </dl>
+          </aside>
+          <nav className="contact-links" aria-label="Contact and profiles">
+            <a href={profile.links.emailHref}>email ↗</a>
+            <a href={profile.links.github} target="_blank" rel="noreferrer">github ↗</a>
+            <a href={profile.links.linkedin} target="_blank" rel="noreferrer">linkedin ↗</a>
+            <a href={profile.links.resume} target="_blank" rel="noreferrer">résumé ↗</a>
+          </nav>
         </div>
-      ) : null}
-
-      <div className="paper-bg" aria-hidden />
-
-      <div className="app-above-paper">
-        <div className="app-above-paper__inner">
-          <Nav />
-
-          <main id="top">
-            <Hero onCopyEmail={copyEmailToClipboard} />
-
-            <header className="section-heading">
-              <h2 className="section-heading__title">Selected work</h2>
-              <span className="section-heading__count">
-                {String(projects.length).padStart(2, '0')} entries
-              </span>
-            </header>
-
-            <ul className="project-list">
-              {projects.map((project, i) => (
-                <li key={project.id}>
-                  <ProjectCard
-                    index={i}
-                    total={projects.length}
-                    project={project}
-                    onOpenMedia={openLightbox}
-                    onCopyEmail={copyEmailToClipboard}
-                  />
-                </li>
-              ))}
-            </ul>
-          </main>
-
-          <footer className="site-footer">
-            <span>
-              © {year} {profile.name}
-            </span>
-            <a href={profile.links.emailHref}>{profile.links.email}</a>
-          </footer>
+        <figure className="portrait photo-print">
+          <span className="photo-tape" aria-hidden="true" />
+          {profile.portrait ? <img src={profile.portrait} alt="Kunal Kaushik" decoding="async" fetchPriority="high" /> : <div className="portrait-placeholder"><span className="portrait-initials" aria-hidden="true">kk.</span><span>portrait coming soon</span></div>}
+          <figcaption>{profile.name}</figcaption>
+        </figure>
+      </header>
+      <section id="work" aria-labelledby="work-heading">
+        <div className="section-heading"><h2 id="work-heading">Things I’ve been building</h2><svg className="doodle-arrow" viewBox="0 0 95 42" fill="none" aria-hidden="true"><path d="M4 7C31-4 60 0 65 17S54 34 57 27 77 19 90 35M78 34l13 3-1-13" /></svg></div>
+        <div className="project-list">
+          {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
         </div>
-      </div>
-
-      <Suspense fallback={null}>
-        <Lightbox
-          state={lightbox}
-          onClose={closeLightbox}
-          onPrev={goPrev}
-          onNext={goNext}
-        />
-      </Suspense>
-    </>
-  )
+      </section>
+      <section className="contact" aria-labelledby="contact-heading"><span className="contact-star" aria-hidden="true">✳</span><div><h2 id="contact-heading">Let’s make something good.</h2><a href={profile.links.emailHref}>Say hello ↗</a></div></section>
+      <footer><p>{profile.name}, {new Date().getFullYear()}.</p><p>Plain text for agents at <a href="/ai/">/ai</a>, with <a href="/llms.txt">llms.txt</a> and <a href="/llms-full.txt">llms-full.txt</a>.</p></footer>
+    </main>
+  </>
 }
+
+
+
+

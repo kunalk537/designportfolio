@@ -1,0 +1,36 @@
+{
+  "id": "riftrobotics",
+  "title": "FTC competition robot",
+  "summary": "Designed and built a competition robot with custom mechanisms, odometry, and vision-guided alignment.",
+  "tags": [
+    "DFM",
+    "Team Leadership",
+    "3D Design",
+    "Wiring",
+    "Java",
+    "C/C++",
+    "Soldering"
+  ],
+  "media": [
+    "/rift1.png",
+    {
+      "src": "/rift3.mp4",
+      "alt": "FTC robot demonstration"
+    },
+    "/rift2.png",
+    "/riftresume.png"
+  ],
+  "paragraphs": [
+    "Chassis: Belt-driven mecanum wheel drivetrain with 4x 12V 435 RPM DC motors at 1:1 ratio, with two-wheel sprung odometry for precise mapping of field movements. Custom CNC-milled aluminum + polycarbonate chassis to balance weight and structural integrity.",
+    "Intake: Servo-powered linkage driving 3-stage linear slides to intake game pieces at distance. Virtual four-bar geared 2:1 for speedy movement of claw, which has computer vision controlled-yaw to align with rectangular game pieces.",
+    "Outtake: Four-stage linear slides driven by 2x 12V 312 RPM DC motors with pulley system and kevlar cascade stringing. Second virtual four-bar geared 1:1 with claw to quickly deposit game pieces into basket.",
+    "Stack: 3D Printing, CNC Milling, Design + Prototyping, Assembly, Soldering, Wiring, Physics + Kinematics, Iteration, Component Selection"
+  ],
+  "outcome": "5,000+ part assembly · CNC + 3D-printed components",
+  "category": "Robotics",
+  "order": 6,
+  "highlights": [
+    "Custom CNC chassis, mecanum drivetrain, and sprung odometry.",
+    "Vision-guided intake and multi-stage slides for manipulating game pieces."
+  ]
+}

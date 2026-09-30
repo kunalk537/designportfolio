@@ -1,82 +1,59 @@
 # Kunal Kaushik — Portfolio
 
-A single-page site: your name, short intro, contact in the header, then projects with space for one or two images and a full written description.
+A handwritten portfolio on textured ivory paper. The header contains your name, a portrait, a small “Right now” box, and contact links. Projects begin as compact notebook entries with an open-notes prompt. Expanded entries contain manual carousels with buttons, position indicators, arrow keys, and touch swipes. Videos play muted when selected; click the video to pause or resume. Zoom fades and scales smoothly, and closes with Escape. Names and project titles reveal gently on entry; no introductory paragraph is displayed.
 
-## Run locally
+## Run
 
-```bash
+```sh
 npm install
 npm run dev
+npm run build
+npm run lint
 ```
 
-## Edit copy and contact
+## Add or edit projects
 
-- **`src/content/profile.ts`** — `name`, `subtext`, and `links` (email, LinkedIn, GitHub, resume path).
+Copy `templates/project.json` into `src/content/projects/your-project.json`. Set a unique `id`, title, category, and order. Lower order appears first. Files are discovered automatically.
 
-## Edit projects
+- `summary`: what you built and why.
+- `outcome`: a measured result or concrete accomplishment you can support.
+- `highlights`: short engineering notes shown on the paper.
+- `media`: files from `public/`, in carousel order. Strings are detected as images or videos. Objects support `src`, `alt`, `caption`, `type`, and video `poster`.
+- `paragraphs`: full technical details included in the agent-readable version.
+- `links`: optional objects with `label` and `href` for demos or code.
+- `status: "coming-soon"`: a planned entry. NMbL lab, FSAE, and the BLDC driver are currently placeholders.
 
-- **`src/content/projects.ts`** — list of `Project` objects:
+Categories: `Robotics`, `Computer vision`, `Electronics`. Empty media arrays render text only. Add any number of images; the carousel adapts automatically. Visitors can open the displayed image at full size, and videos have native playback controls. Carousels never advance automatically.
 
-  - **`title`**, **`summary`** (one line under the title).
-  - **`tags`** — small chips shown under the summary.
-  - **`media`** — array of files in `public/`. Each entry is either a string or an object:
-    - `'/projects/arm-1.jpg'` — string, auto-detected as image
-    - `'/projects/arm-demo.mp4'` — string, auto-detected as video by extension
-    - Object form (use this whenever you want a caption):
-      ```ts
-      {
-        src: '/projects/arm-demo.mp4',
-        caption: 'Bring-up demo · 5 ms loop',
-        poster: '/projects/arm-poster.jpg', // optional video thumbnail
-        alt: 'Robot arm settling into pose', // optional, defaults to project title
-        type: 'video', // optional, auto-detected from src
-      }
-      ```
+## Personal details
 
-    Recognized video extensions: `.mp4`, `.webm`, `.mov`, `.m4v`, `.ogg`, `.ogv` (`.mp4` recommended for best browser support). Empty array shows two dashed placeholders.
+Edit `src/content/profile.ts` for age, song, and contact links. Song of the day is a manual selection.
 
-    **Captions** are only shown inside the "Look closer" lightbox, so they don't clutter the card.
-  - **`paragraphs`** — each string is one paragraph of your write-up.
+The supplied portrait is optimized in `public/portrait.jpg`. Its centered crop is set by `.portrait img` in the stylesheet.
 
-### Layout adapts to media count
+## Paper aesthetic
 
-| Items | Display |
-| ----- | ------- |
-| 0     | Two dashed placeholders |
-| 1–2   | Stacked at full width |
-| 3+    | First two stacked at full width; the column becomes scrollable (with an animated **Scroll for more** indicator) and the rest reveal as you scroll inside it |
+`src/index.css` contains the paper, pencil marks, tape, ink, and handwriting styles. Lora provides upright, formal lettering in graphite colors. `public/graphite-grain.svg` adds subtle pencil texture to headings; shaded hole punches line the left margin. The background texture is `public/paper-texture.png`; its generation prompt is documented in `docs/paper-texture.md`.
 
-Click **Look closer** on any tile to open the lightbox, which supports `← →` and `Esc`, plays videos with native controls, shows a position counter, and renders the caption below the image.
+## Agent-readable content
 
-Add a new project by copying an existing block and changing `id`.
+`npm run dev` and `npm run build` regenerate `/ai/`, `/llms.txt`, and `/llms-full.txt` from the same profile and project files. To refresh these while the dev server is running, run `node scripts/generate-ai.mjs`.
 
-## Resume PDF
+## Domain
 
-Put the file at `public/Kunal Kaushik - Resume.pdf` or change `links.resume` in `profile.ts`.
+Recommended: `kunalk.dev`; full-name alternative: `kunalkaushik.me`. September 29, 2026 registry checks found no registration records for those candidates. `kunalkaushik.com` and `kunalk.com` were registered. Confirm purchase availability and pricing at a registrar. No domain has been purchased.
 
-## Deploying
+After connecting a domain, update URLs in `index.html`, `public/robots.txt`, and `public/sitemap.xml`. `npm run build` produces `dist/` for your existing static host.
 
-```bash
-npm run build      # outputs dist/
-npm run preview    # local smoke test of the production build
-```
+## Notebook refinements
 
-Drop the `dist/` folder on any static host — Vercel, Netlify, Cloudflare Pages, or GitHub Pages all work out of the box. After your first deploy, update three places to your final URL:
+The paper and ruled lines cover the full background. Your name writes in on arrival; project titles animate once when they enter view. A decorative equalizer animates beside the song (it does not indicate audio playback). All animation respects reduced-motion preferences.
 
-1. `index.html` — `og:url`, `<link rel="canonical">`, and the `url` field inside the JSON-LD block.
-2. `public/robots.txt` — the `Sitemap:` line.
+Carousel images stay mounted and are preloaded near the viewport for smooth crossfades. Photo windows use each image’s natural aspect ratio, without letterboxing. Click the visible zoom label to open the integrated viewer; it supports Escape, keyboard arrows, native focus containment, and navigation controls. Background scrolling is locked while it is open.
 
-### Asset tips
+`public/favicon.svg` is the hand-drawn 2k tab icon.
 
-All project images, the resume PDF, and the demo video live in `public/`. They're shipped as-is, so:
 
-- Keep images under ~500 KB where possible. Large PNGs (rift1, snosight3d, etc.) compress well as JPG/WebP — try [squoosh.app](https://squoosh.app) for one-shot resizes.
-- Videos: `.mp4` (H.264) is the safest format. The site uses `preload="metadata"` so only a few hundred KB load up front per video; the full file streams once a viewer presses play. If a clip is over ~10 MB consider compressing with `ffmpeg -i in.mp4 -vcodec libx264 -crf 28 out.mp4`.
-- The first project's first image is loaded eagerly with `fetchpriority="high"` for a fast LCP — keep that one extra optimized.
 
-### Performance notes
+SEO and AI discovery are generated during builds. See docs/seo-launch.txt for domain setup, deployment, Search Console, and Bing indexing steps. The production HTML is prerendered and hydrates into the same interactive portfolio.
 
-- Google Fonts are loaded **non-blocking** (preload + swap pattern) so first paint never waits on the network.
-- The lightbox is **code-split** (`React.lazy`) and only downloads when someone clicks "Look closer."
-- `history.scrollRestoration` is set to `manual` and the page resets to the top on every load and on bfcache restore.
-# designportfolio

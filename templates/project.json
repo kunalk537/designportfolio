@@ -1,0 +1,12 @@
+{
+  "id": "your-project",
+  "title": "A short, specific project name",
+  "summary": "What you built and the problem it addresses.",
+  "outcome": "A verified result or concrete engineering achievement",
+  "category": "Robotics",
+  "order": 6,
+  "tags": ["CAD", "Python"],
+  "media": [],
+  "paragraphs": ["Explain your role, technical decisions, and what you learned."],
+  "links": []
+}

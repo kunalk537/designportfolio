@@ -1,0 +1,38 @@
+{
+  "id": "nova",
+  "title": "Self-balancing humanoid",
+  "summary": "Exploring two-axis stabilization with reaction wheels, IMU feedback, and custom drivetrains.",
+  "tags": [
+    "Motor Control",
+    "Sensor Fusion",
+    "Raspberry Pi",
+    "CAN",
+    "Python",
+    "Soldering",
+    "Crimping",
+    "3D Printing",
+    "CAD"
+  ],
+  "media": [
+    {
+      "alt": "Self-balancing humanoid demonstration",
+      "type": "video",
+      "src": "/NovaHumanoidFinal.mp4"
+    },
+    "/nova1.png",
+    "/nova3.png"
+  ],
+  "paragraphs": [
+    "Reaction wheel system 3D-printed with steel dowels around the edges as weight, perpendicular design enables torque in x and y axis; powered by 180KV motors at 24V, controlled by ODrive S1 over CANbus.",
+    "Raspberry Pi used as microcontroller for complex inverse kinematics and controls equations, connected to IMU data via I2C and processing it + computer vision pipeline onboard.",
+    "Custom gearbox for driving wheels at 1:8 ratio to maintain stability and torque, utilizing existing motors in slim form-factor through printed modular shell, spur gears, and ball bearings.",
+    "Stack: Motor Control, Sensor Fusion, Raspberry Pi, CANbus, Python, Soldering, Crimping, 3D Printing, CAD, Inverse Kinematics, Controls Equations"
+  ],
+  "outcome": "Dual reaction wheels · ODrive motor control over CAN",
+  "category": "Robotics",
+  "order": 4,
+  "highlights": [
+    "Designed perpendicular reaction wheels for stabilization in two axes.",
+    "Integrated IMU feedback, Raspberry Pi compute, and a custom 1:8 gearbox."
+  ]
+}

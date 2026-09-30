@@ -1,0 +1,31 @@
+{
+  "id": "semiconductor",
+  "title": "Wafer alignment detection",
+  "summary": "Trained a computer vision model to identify misaligned semiconductor wafers from microscope images.",
+  "tags": [
+    "Computer Vision",
+    "Dataset Creation",
+    "Model Training",
+    "Performance Metric Analysis"
+  ],
+  "media": [
+    "/semiconductor3.jpg",
+    "/semiconductor1.jpg",
+    "/semiconductor2.png",
+    "/semiconductor4.png"
+  ],
+  "paragraphs": [
+    "Improper wafer alignment during semiconductor manufacturing decreases yield, with current solutions being expensive and physically bulky; CV as a solution.",
+    "Built dataset using microscope images, annotated with bounding boxes(p: perfectly aligned, n: not aligned) to create 560 image dataset. Heavy class imbalance necessitated augmentation with grayscale, rotation, and color corrections; 1600 images in total.",
+    "Custom YoloV9 model trained on dataset with 80/10/10 split for training, validation, and test; Training done on Google Colab with 1000 epochs, batch size -1, patience 15, + more; Trained + tested on A100 GPU through Google Colab.",
+    "Performance metrics calculated with confusion matrix and accuracy, precision, recall, and F1 score. Model achieved F1 of .95, Precision of .962, Recall of .936, overall accuracy of .95.",
+    "Stack: Dataset Managment, YOLO V9, Computer Vision Pipeline, Python, Google Colab, A100 GPU, Results Analysis, Class Imbalance Handling"
+  ],
+  "outcome": "0.95 F1 score · 1,600-image augmented dataset",
+  "category": "Computer vision",
+  "order": 8,
+  "highlights": [
+    "Built and augmented a microscope-image dataset, then trained YOLOv9 on an A100 GPU.",
+    "Evaluated alignment detection with precision, recall, and F1."
+  ]
+}

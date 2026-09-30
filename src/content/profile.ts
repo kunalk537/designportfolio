@@ -1,8 +1,22 @@
 export const profile = {
   name: 'Kunal Kaushik',
+  // Portrait framing is controlled in index.css.
+  portrait: '/portrait.jpg' as string,
+  // Add a sentence about hobbies or life outside engineering here.
+  personalNote: '' as string,
+  age: 18,
+  book: {
+    title: 'Steve Jobs',
+    author: 'Walter Isaacson',
+  },
+  song: {
+    title: 'Memory Box',
+    artist: 'Peter Cat Recording Co.',
+    href: 'https://open.spotify.com/track/6C5xm2roWdAIda9WJmu1jG',
+  } as { title: string; artist: string; href: string },
   headline: 'Electrical engineering & robotics',
   intro:
-    "Hi there! I'm Kunal, an incoming freshman at UIUC studying Electrical Engineering and Computer Science. I'm passionate about robotics, computer vision, embedded systems, and computer architecture used in conjunction to build amazing products.",
+    "I'm Kunal, an electrical engineering student at the University of Illinois Urbana-Champaign. I build robots, embedded systems, and computer vision tools.",
   focus: ['Embedded', 'Controls', 'Sensing', 'Mechatronics'],
   education: {
     school: 'University of Illinois Urbana-Champaign',
@@ -36,3 +50,5 @@ export const profile = {
 } as const
 
 export type Profile = typeof profile
+
+
