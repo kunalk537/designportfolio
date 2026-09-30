@@ -1,6 +1,6 @@
 # Kunal Kaushik
 
-Official portfolio: https://kunalsk.com/
+Official portfolio: https://kunalkaushik.vercel.app/
 
 I'm Kunal, an electrical engineering student at the University of Illinois Urbana-Champaign. I build robots, embedded systems, and computer vision tools.
 
@@ -13,7 +13,7 @@ Listen: https://open.spotify.com/track/6C5xm2roWdAIda9WJmu1jG
 Email: kunalkaushik537@gmail.com
 GitHub: https://github.com/kunalk537
 LinkedIn: https://www.linkedin.com/in/kunalkaushik537
-Resume: https://kunalsk.com/Kunal%20Kaushik%20-%20Resume.pdf
+Resume: https://kunalkaushik.vercel.app/Kunal%20Kaushik%20-%20Resume.pdf
 
 ## Projects
 
@@ -78,9 +78,9 @@ Custom gearbox for driving wheels at 1:8 ratio to maintain stability and torque,
 Stack: Motor Control, Sensor Fusion, Raspberry Pi, CANbus, Python, Soldering, Crimping, 3D Printing, CAD, Inverse Kinematics, Controls Equations
 
 Media:
-- https://kunalsk.com/NovaHumanoidFinal.mp4
-- https://kunalsk.com/nova1.png
-- https://kunalsk.com/nova3.png
+- https://kunalkaushik.vercel.app/NovaHumanoidFinal.mp4
+- https://kunalkaushik.vercel.app/nova1.png
+- https://kunalkaushik.vercel.app/nova3.png
 
 
 ### AR ski goggle electronics
@@ -104,9 +104,9 @@ ICM-20948 sensor for IMU feedback with voltage stepped down from 3.3V to 1.8V lo
 Stack: Schematic Design, Component Selection, EasyEDA, ESP32, MPU9050, OLED Display, USB-C Connector, Li-ion Battery, TP4056 Charger, 3D-printed Case
 
 Media:
-- https://kunalsk.com/snosight2d.png
-- https://kunalsk.com/snosight3d.png
-- https://kunalsk.com/snosight3.png
+- https://kunalkaushik.vercel.app/snosight2d.png
+- https://kunalkaushik.vercel.app/snosight3d.png
+- https://kunalkaushik.vercel.app/snosight3.png
 
 
 ### FTC competition robot
@@ -128,10 +128,10 @@ Outtake: Four-stage linear slides driven by 2x 12V 312 RPM DC motors with pulley
 Stack: 3D Printing, CNC Milling, Design + Prototyping, Assembly, Soldering, Wiring, Physics + Kinematics, Iteration, Component Selection
 
 Media:
-- https://kunalsk.com/rift1.png
-- https://kunalsk.com/rift3.mp4
-- https://kunalsk.com/rift2.png
-- https://kunalsk.com/riftresume.png
+- https://kunalkaushik.vercel.app/rift1.png
+- https://kunalkaushik.vercel.app/rift3.mp4
+- https://kunalkaushik.vercel.app/rift2.png
+- https://kunalkaushik.vercel.app/riftresume.png
 
 
 ### Motor driver & sensor board
@@ -155,8 +155,8 @@ H-bridge motor driver for motor control enables basic speed and direction contro
 Stack: Embedded, PCB Design, Motor Control, I2C, C/C++, Soldering, 4-layer
 
 Media:
-- https://kunalsk.com/rumble1.png
-- https://kunalsk.com/rumble2.png
+- https://kunalkaushik.vercel.app/rumble1.png
+- https://kunalkaushik.vercel.app/rumble2.png
 
 
 ### Wafer alignment detection
@@ -180,10 +180,10 @@ Performance metrics calculated with confusion matrix and accuracy, precision, re
 Stack: Dataset Managment, YOLO V9, Computer Vision Pipeline, Python, Google Colab, A100 GPU, Results Analysis, Class Imbalance Handling
 
 Media:
-- https://kunalsk.com/semiconductor3.jpg
-- https://kunalsk.com/semiconductor1.jpg
-- https://kunalsk.com/semiconductor2.png
-- https://kunalsk.com/semiconductor4.png
+- https://kunalkaushik.vercel.app/semiconductor3.jpg
+- https://kunalkaushik.vercel.app/semiconductor1.jpg
+- https://kunalkaushik.vercel.app/semiconductor2.png
+- https://kunalkaushik.vercel.app/semiconductor4.png
 
 
 Coming-soon entries are placeholders, not claims of completed work. All metrics are self-reported.

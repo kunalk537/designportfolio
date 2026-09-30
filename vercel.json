@@ -1,19 +1,33 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "kunalkaushik.vercel.app" }],
-      "destination": "https://kunalsk.com/:path*",
-      "permanent": true
+      "source": "/ai",
+      "destination": "/ai/index.html"
     },
     {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.kunalsk.com" }],
-      "destination": "https://kunalsk.com/:path*",
-      "permanent": true
+      "source": "/ai/",
+      "destination": "/ai/index.html"
     }
   ],
-  "rewrites": [{ "source": "/ai", "destination": "/ai/index.html" }, { "source": "/ai/", "destination": "/ai/index.html" }],
-  "headers": [{ "source": "/llms.txt", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }] }, { "source": "/llms-full.txt", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }] }]
+  "headers": [
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/llms-full.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    }
+  ]
 }

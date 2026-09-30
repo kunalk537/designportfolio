@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kunalsk.com/sitemap.xml
+Sitemap: https://kunalkaushik.vercel.app/sitemap.xml

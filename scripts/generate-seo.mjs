@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import { profile } from '../src/content/profile.ts'
-const origin = 'https://kunalsk.com'
+import { siteUrl } from '../src/content/site.ts'
+const origin = siteUrl
 const projects = fs.readdirSync('src/content/projects').filter(name => name.endsWith('.json')).map(name => JSON.parse(fs.readFileSync(`src/content/projects/${name}`, 'utf8'))).sort((a,b) => a.order-b.order)
 const title = 'Kunal Kaushik | Electrical Engineering & Robotics at UIUC'
 const description = 'Kunal Kaushik is an electrical engineering student at UIUC building robotics, embedded systems, custom PCBs, and computer vision projects. Explore his work and contact him.'
@@ -51,3 +52,4 @@ fs.writeFileSync('index.html', `<!doctype html>
 </html>\n`)
 fs.writeFileSync('public/robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`)
 fs.writeFileSync('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${origin}/</loc></url></urlset>\n`)
+
