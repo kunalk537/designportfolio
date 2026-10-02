@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import assert from 'node:assert/strict'
 const html = fs.readFileSync('dist/index.html', 'utf8')
-assert.match(html, /rel="canonical" href="https:\/\/kunalkaushik.vercel.app\/"/)
+assert.match(html, /rel="canonical" href="https:\/\/kunalsk.com\/"/)
 assert.match(html, /Electrical engineering at UIUC/)
 assert.match(html, /FTC competition robot/)
 assert.match(html, /<h1>/)
@@ -9,13 +9,14 @@ assert.doesNotMatch(html, /name="keywords"/)
 const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
 const person = schema['@graph'].find(node => node['@type'] === 'Person')
 assert.equal(person.jobTitle, 'Electrical engineering student')
-assert.equal(person.url, 'https://kunalkaushik.vercel.app/')
+assert.equal(person.url, 'https://kunalsk.com/')
 assert.equal(person.affiliation.name, 'University of Illinois Urbana-Champaign')
 assert.equal(schema['@graph'].find(node => node['@type'] === 'ProfilePage').hasPart.length, 5)
-assert.match(fs.readFileSync('dist/robots.txt','utf8'), /Sitemap: https:\/\/kunalkaushik.vercel.app\/sitemap.xml/)
-assert.match(fs.readFileSync('dist/llms-full.txt','utf8'), /https:\/\/kunalkaushik.vercel.app\/rift3.mp4/)
+assert.match(fs.readFileSync('dist/robots.txt','utf8'), /Sitemap: https:\/\/kunalsk.com\/sitemap.xml/)
+assert.match(fs.readFileSync('dist/llms-full.txt','utf8'), /https:\/\/kunalsk.com\/rift3.mp4/)
 assert.match(fs.readFileSync('dist/llms.txt','utf8'), /Current book: Steve Jobs/)
 assert.equal(JSON.parse(fs.readFileSync('vercel.json','utf8')).redirects, undefined)
 for (const src of [...html.matchAll(/(?:src|poster)="(\/[^"?]+)"/g)].map(match => match[1])) assert.ok(fs.existsSync(`dist${decodeURIComponent(src)}`), `Missing asset: ${src}`)
 console.log('SEO checks passed: prerendered content, entity graph, canonical, crawler files, redirects, and referenced assets.')
+
 
