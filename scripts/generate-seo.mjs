@@ -3,7 +3,7 @@ import { profile } from '../src/content/profile.ts'
 import { siteUrl } from '../src/content/site.ts'
 const origin = siteUrl
 const projects = fs.readdirSync('src/content/projects').filter(name => name.endsWith('.json')).map(name => JSON.parse(fs.readFileSync(`src/content/projects/${name}`, 'utf8'))).sort((a,b) => a.order-b.order)
-const title = 'Kunal Kaushik | Electrical Engineering & Robotics at UIUC'
+const title = profile.name
 const description = 'Kunal Kaushik is an electrical engineering student at UIUC building robotics, embedded systems, custom PCBs, and computer vision projects. Explore his work and contact him.'
 const personId = `${origin}/#kunal-kaushik`
 const schema = {
@@ -27,7 +27,8 @@ fs.writeFileSync('index.html', `<!doctype html>
 <meta name="google-site-verification" content="mji-gkf_MkXGOoMiOGOepJiVLAm1FLaXGOqpLIne6fM" />
 <meta name="theme-color" content="#faf8f0" />
 <link rel="canonical" href="${origin}/" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
 <link rel="alternate" type="text/plain" href="${origin}/llms-full.txt" title="Full plain-text portfolio" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,4 +53,5 @@ fs.writeFileSync('index.html', `<!doctype html>
 </html>\n`)
 fs.writeFileSync('public/robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`)
 fs.writeFileSync('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${origin}/</loc></url></urlset>\n`)
+
 
