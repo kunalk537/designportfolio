@@ -76,23 +76,6 @@ Media:
 - https://kunalsk.com/nova3.png
 
 
-### Smart Ski Goggles
-Status: Portfolio project
-Category: Electronics
-
-My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.
-Trying to fit a little more into a pair of ski goggles.
-
-
-
-My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.
-
-Media:
-- https://kunalsk.com/snosight3d.png
-- https://kunalsk.com/snosight2d.png
-- https://kunalsk.com/snosight3.png
-
-
 ### FTC competition robot
 Status: Portfolio project
 Category: Robotics
@@ -109,6 +92,23 @@ Media:
 - https://kunalsk.com/rift1.png
 - https://kunalsk.com/rift3.mp4
 - https://kunalsk.com/rift2.png
+
+
+### Smart Ski Goggles
+Status: Portfolio project
+Category: Electronics
+
+My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.
+Trying to fit a little more into a pair of ski goggles.
+
+
+
+My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.
+
+Media:
+- https://kunalsk.com/snosight3d.png
+- https://kunalsk.com/snosight2d.png
+- https://kunalsk.com/snosight3.png
 
 
 ### Peripheral Breakout Board
