@@ -222,8 +222,8 @@ function ScrollCue() {
     }
   }, [])
   return visible && <button type="button" className="scroll-cue" aria-label="Scroll down to see more projects" onClick={() => window.scrollBy({ top: window.innerHeight * .65, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>
-    <span>more from the workbench</span>
-    <svg viewBox="0 0 32 42" fill="none" aria-hidden="true"><path d="M10 3L26 19l-9 1 5 11-5 2-5-11-7 6 5-25Z" /><path className="scroll-cue-arrow" d="M9 34v6m-4-4 4 4 4-4" /></svg>
+    <svg viewBox="0 0 24 30" fill="none" aria-hidden="true"><path d="M12 4v21M5 18l7 7 7-7" /></svg>
+    <span>scroll</span>
   </button>
 }
 
