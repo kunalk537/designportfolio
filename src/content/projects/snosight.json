@@ -12,6 +12,11 @@
   ],
   "media": [
     {
+      "src": "/snosight-headshot.jpg",
+      "alt": "Headshot wearing the SnoSight smart ski goggles prototype",
+      "caption": "Trying out the SnoSight goggles"
+    },
+    {
       "src": "/snosight-goggles.jpg",
       "alt": "SnoSight smart ski goggles prototype with display and connected electronics",
       "caption": "The SnoSight goggles prototype"
