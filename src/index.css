@@ -237,7 +237,7 @@ dt { font-size: 13px; color: #79766c; }
 dd { font-size: 16px; line-height: 1.45; }
 .song small { font-size: 12px; }
 .contact-links { font-size: 14px; gap: 23px; }
-.portrait img { object-position: 84% 50%; }
+.portrait img { object-position: 50% 50%; }
 figcaption, .carousel .photo-caption { font-size: 13px; padding: 11px 3px; min-height: 37px; }
 .project-summary { font-size: 16px; line-height: 1.7; }
 .project-outcome, .highlights { font-size: 14px; line-height: 1.65; }

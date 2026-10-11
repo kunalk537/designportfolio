@@ -1,7 +1,7 @@
 export const profile = {
   name: 'Kunal Kaushik',
   // Portrait framing is controlled in index.css.
-  portrait: '/portrait.jpg' as string,
+  portrait: '/portrait-chest-up.jpg' as string,
   // Add a sentence about hobbies or life outside engineering here.
   personalNote: '' as string,
   age: 18,
