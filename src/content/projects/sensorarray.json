@@ -18,6 +18,11 @@
       "caption": "Ready to plug in"
     },
     {
+      "src": "/peripheral-board-connected.png",
+      "alt": "Peripheral breakout board connected to an ESP32 and peripheral wiring, with lighting enhanced and background clutter removed",
+      "caption": "All hooked up"
+    },
+    {
       "src": "/rumble1.png",
       "caption": "Behind the traces"
     }

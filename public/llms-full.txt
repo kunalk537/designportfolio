@@ -126,6 +126,7 @@ This board brings an ESP32, a motor driver, servo connections, and motion sensin
 
 Media:
 - https://kunalsk.com/peripheral-breakout-board.png
+- https://kunalsk.com/peripheral-board-connected.png
 - https://kunalsk.com/rumble1.png
 
 
