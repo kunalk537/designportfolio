@@ -9,10 +9,22 @@
     "Performance Metric Analysis"
   ],
   "media": [
-    "/semiconductor3.jpg",
-    "/semiconductor1.jpg",
-    "/semiconductor2.png",
-    "/semiconductor4.png"
+    {
+      "src": "/semiconductor3.jpg",
+      "caption": "Under the microscope"
+    },
+    {
+      "src": "/semiconductor1.jpg",
+      "caption": "Building the dataset"
+    },
+    {
+      "src": "/semiconductor2.png",
+      "caption": "How it did"
+    },
+    {
+      "src": "/semiconductor4.png",
+      "caption": "Writing it up"
+    }
   ],
   "paragraphs": [
     "I explored whether computer vision could spot misalignment in semiconductor wafer images. That meant collecting and labeling 560 microscope images, working around an uneven dataset, and training a YOLOv9 model. The model reached a reported F1 score of 0.95 on the project dataset, but only after over 30 different iterations with over 6000 total epochs of training. For a problem that is on such a microscopic scale, getting it this accurate required a whole lot of persistence. It was worth it though - just imagine how useful this could be."

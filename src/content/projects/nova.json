@@ -17,10 +17,17 @@
     {
       "alt": "Self-balancing humanoid demonstration",
       "type": "video",
-      "src": "/NovaHumanoidFinal.mp4"
+      "src": "/NovaHumanoidFinal.mp4",
+      "caption": "Finding its balance"
     },
-    "/nova1.png",
-    "/nova3.png"
+    {
+      "src": "/nova1.png",
+      "caption": "Reaction wheels"
+    },
+    {
+      "src": "/nova3.png",
+      "caption": "Inside the gearbox"
+    }
   ],
   "paragraphs": [
     "This project actually started out as a tutoring gig, when my old teacher asked me to help her student with reading and writing. I caught a glimpse of his dad's garage during a session, and found an exciting opportunity to work on humanoids. I worked on a custom gearbox for the wheeled base, designing 3D-printed components for the frame to merge with aluminum inserts. I also was solely responsible for electronics, soldering a perfboard with a Raspberry Pi, IMU, and CAN hat with connectors for multiple motor drivers + quadrature encoders (hint: the price of those is the inspiration for my newest project)."

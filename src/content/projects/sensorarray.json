@@ -15,9 +15,12 @@
     {
       "src": "/peripheral-breakout-board.png",
       "alt": "Assembled peripheral breakout board with motor driver, ESP32 sockets, and peripheral connectors",
-      "caption": "The assembled peripheral breakout board"
+      "caption": "Ready to plug in"
     },
-    "/rumble1.png"
+    {
+      "src": "/rumble1.png",
+      "caption": "Behind the traces"
+    }
   ],
   "paragraphs": [
     "This board brings an ESP32, a motor driver, servo connections, and motion sensing into one place. I designed the schematic and four-layer PCB around the practical question of how to power and connect all of those pieces. While the original project the board was intended for was scrapped (an educational toy car), the utility of this right here has been endless. I can't count how many times I've used it to quickly hook up a servo or a couple motors - for sure more than I expected."

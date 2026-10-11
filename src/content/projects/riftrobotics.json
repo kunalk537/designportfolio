@@ -15,14 +15,26 @@
     {
       "src": "/riftresume.png",
       "alt": "Full FTC robot assembly with intake, slide mechanisms, and mecanum chassis",
-      "caption": "Full robot assembly"
+      "caption": "The whole robot"
     },
-    "/rift1.png",
+    {
+      "src": "/ftc-team.png",
+      "alt": "Three FTC teammates with trophies outside a FIRST event",
+      "caption": "A few of the crew"
+    },
+    {
+      "src": "/rift1.png",
+      "caption": "Under the hood"
+    },
     {
       "src": "/rift3.mp4",
-      "alt": "FTC robot demonstration"
+      "alt": "FTC robot demonstration",
+      "caption": "In motion"
     },
-    "/rift2.png"
+    {
+      "src": "/rift2.png",
+      "caption": "The intake"
+    }
   ],
   "paragraphs": [
     "This is the project where I can confidently say that I know how every single bit of hardware works, down to each screw and trace. I can't count the number of times I had to disassemble the linear slides or differential virtual four bar in the quest for optimization. But of course, there were plenty of electrical complications as well, from the installation of a servo power module to prevent voltage droop and the resoldering of a battery connector to recover the $300 REV Control Hub. Despite the hardware challenge, it was the leadership trials that took the cake; leading 7 people with different strengths, backgrounds, and personalities all while trying to develop a culture on the fly was certainly a novel experience."
