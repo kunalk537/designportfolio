@@ -20,8 +20,8 @@ export const profile = {
   focus: ['Embedded', 'Controls', 'Sensing', 'Mechatronics'],
   education: {
     school: 'University of Illinois Urbana-Champaign',
-    degree: 'B.S. Electrical Engineering',
-    period: '2026 — 2030',
+    degree: 'B.S. Electrical Engineering, Minor in Computer Science',
+    period: '2026 — 2029',
     detail: 'Focus: chip design, robotics, and embedded systems',
   },
   availability: {
@@ -45,7 +45,7 @@ export const profile = {
       'mailto:kunalkaushik537@gmail.com?subject=Hello%20from%20your%20portfolio',
     github: 'https://github.com/kunalk537',
     linkedin: 'https://www.linkedin.com/in/kunalkaushik537',
-    resume: '/Kunal Kaushik - Resume.pdf',
+    resume: '/Kunal-Kaushik-Electrical-Engineering-Resume.pdf',
   },
 } as const
 

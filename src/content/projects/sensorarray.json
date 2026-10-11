@@ -1,7 +1,7 @@
 {
   "id": "sensorarray",
-  "title": "Motor driver & sensor board",
-  "summary": "Built an ESP32 breakout board that brings motor control, servo connections, and motion sensing together.",
+  "title": "Peripheral Breakout Board",
+  "summary": "This board brings an ESP32, a motor driver, servo connections, and motion sensing into one place. I designed the schematic and four-layer PCB around the practical question of how to power and connect all of those pieces. While the original project the board was intended for was scrapped (an educational toy car), the utility of this right here has been endless. I can't count how many times I've used it to quickly hook up a servo or a couple motors - for sure more than I expected.",
   "tags": [
     "Embedded",
     "PCB Design",
@@ -16,17 +16,9 @@
     "/rumble2.png"
   ],
   "paragraphs": [
-    "Powered by a microUSB connector, with 5V battery and LDO to step down to 1.8V for IMU logic levels; ESP32 and servo both at 3.3V.",
-    "ESP32 serial communication empowered directly through the devboard; initialized with Wi-fi setup to enable wireless flashing and code improvements.",
-    "H-bridge motor driver for motor control enables basic speed and direction control; used with cheaper motors so IMU serves as encoder replacement to guarantee motion.",
-    "4-layer board (signal, ground, 3.3V, signal) to minimize EMI and maintain impedance, using JLCPCB and component selection through LCSC parts.",
-    "Stack: Embedded, PCB Design, Motor Control, I2C, C/C++, Soldering, 4-layer"
+    "This board brings an ESP32, a motor driver, servo connections, and motion sensing into one place. I designed the schematic and four-layer PCB around the practical question of how to power and connect all of those pieces. While the original project the board was intended for was scrapped (an educational toy car), the utility of this right here has been endless. I can't count how many times I've used it to quickly hook up a servo or a couple motors - for sure more than I expected."
   ],
-  "outcome": "Custom 4-layer PCB · H-bridge + 9-axis IMU",
+  "outcome": "Giving motors and sensors a board of their own.",
   "category": "Electronics",
-  "order": 7,
-  "highlights": [
-    "Integrated an H-bridge, servo port, and motion sensing around an ESP32.",
-    "Designed power regulation and wireless firmware update support."
-  ]
+  "order": 7
 }

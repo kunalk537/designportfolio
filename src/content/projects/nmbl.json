@@ -1,11 +1,11 @@
 {
   "id": "nmbl",
-  "title": "NMbL lab with Professor Yim",
+  "title": "Propeller-driven Venus traversal robot",
   "summary": "More on this work soon.",
   "category": "Robotics",
   "order": 2,
-  "status": "coming-soon",
   "tags": [],
   "media": [],
-  "paragraphs": []
+  "paragraphs": [],
+  "status": "coming-soon"
 }

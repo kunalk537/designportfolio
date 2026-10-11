@@ -1,7 +1,7 @@
 {
   "id": "riftrobotics",
   "title": "FTC competition robot",
-  "summary": "Designed and built a competition robot with custom mechanisms, odometry, and vision-guided alignment.",
+  "summary": "This is the project where I can confidently say that I know how every single bit of hardware works, down to each screw and trace. I can't count the number of times I had to disassemble the linear slides or differential virtual four bar in the quest for optimization. But of course, there were plenty of electrical complications as well, from the installation of a servo power module to prevent voltage droop and the resoldering of a battery connector to recover the $300 REV Control Hub. Despite the hardware challenge, it was the leadership trials that took the cake; leading 7 people with different strengths, backgrounds, and personalities all while trying to develop a culture on the fly was certainly a novel experience.",
   "tags": [
     "DFM",
     "Team Leadership",
@@ -12,25 +12,22 @@
     "Soldering"
   ],
   "media": [
+    {
+      "src": "/riftresume.png",
+      "alt": "Full FTC robot assembly with intake, slide mechanisms, and mecanum chassis",
+      "caption": "Full robot assembly"
+    },
     "/rift1.png",
     {
       "src": "/rift3.mp4",
       "alt": "FTC robot demonstration"
     },
-    "/rift2.png",
-    "/riftresume.png"
+    "/rift2.png"
   ],
   "paragraphs": [
-    "Chassis: Belt-driven mecanum wheel drivetrain with 4x 12V 435 RPM DC motors at 1:1 ratio, with two-wheel sprung odometry for precise mapping of field movements. Custom CNC-milled aluminum + polycarbonate chassis to balance weight and structural integrity.",
-    "Intake: Servo-powered linkage driving 3-stage linear slides to intake game pieces at distance. Virtual four-bar geared 2:1 for speedy movement of claw, which has computer vision controlled-yaw to align with rectangular game pieces.",
-    "Outtake: Four-stage linear slides driven by 2x 12V 312 RPM DC motors with pulley system and kevlar cascade stringing. Second virtual four-bar geared 1:1 with claw to quickly deposit game pieces into basket.",
-    "Stack: 3D Printing, CNC Milling, Design + Prototyping, Assembly, Soldering, Wiring, Physics + Kinematics, Iteration, Component Selection"
+    "This is the project where I can confidently say that I know how every single bit of hardware works, down to each screw and trace. I can't count the number of times I had to disassemble the linear slides or differential virtual four bar in the quest for optimization. But of course, there were plenty of electrical complications as well, from the installation of a servo power module to prevent voltage droop and the resoldering of a battery connector to recover the $300 REV Control Hub. Despite the hardware challenge, it was the leadership trials that took the cake; leading 7 people with different strengths, backgrounds, and personalities all while trying to develop a culture on the fly was certainly a novel experience."
   ],
-  "outcome": "5,000+ part assembly · CNC + 3D-printed components",
+  "outcome": "A robot, a team, and a lot of moving parts.",
   "category": "Robotics",
-  "order": 6,
-  "highlights": [
-    "Custom CNC chassis, mecanum drivetrain, and sprung odometry.",
-    "Vision-guided intake and multi-stage slides for manipulating game pieces."
-  ]
+  "order": 6
 }

@@ -1,7 +1,7 @@
 {
   "id": "nova",
   "title": "Self-balancing humanoid",
-  "summary": "Exploring two-axis stabilization with reaction wheels, IMU feedback, and custom drivetrains.",
+  "summary": "This project actually started out as a tutoring gig, when my old teacher asked me to help her student with reading and writing. I caught a glimpse of his dad's garage during a session, and found an exciting opportunity to work on humanoids. I worked on a custom gearbox for the wheeled base, designing 3D-printed components for the frame to merge with aluminum inserts. I also was solely responsible for electronics, soldering a perfboard with a Raspberry Pi, IMU, and CAN hat with connectors for multiple motor drivers + quadrature encoders (hint: the price of those is the inspiration for my newest project).",
   "tags": [
     "Motor Control",
     "Sensor Fusion",
@@ -23,16 +23,9 @@
     "/nova3.png"
   ],
   "paragraphs": [
-    "Reaction wheel system 3D-printed with steel dowels around the edges as weight, perpendicular design enables torque in x and y axis; powered by 180KV motors at 24V, controlled by ODrive S1 over CANbus.",
-    "Raspberry Pi used as microcontroller for complex inverse kinematics and controls equations, connected to IMU data via I2C and processing it + computer vision pipeline onboard.",
-    "Custom gearbox for driving wheels at 1:8 ratio to maintain stability and torque, utilizing existing motors in slim form-factor through printed modular shell, spur gears, and ball bearings.",
-    "Stack: Motor Control, Sensor Fusion, Raspberry Pi, CANbus, Python, Soldering, Crimping, 3D Printing, CAD, Inverse Kinematics, Controls Equations"
+    "This project actually started out as a tutoring gig, when my old teacher asked me to help her student with reading and writing. I caught a glimpse of his dad's garage during a session, and found an exciting opportunity to work on humanoids. I worked on a custom gearbox for the wheeled base, designing 3D-printed components for the frame to merge with aluminum inserts. I also was solely responsible for electronics, soldering a perfboard with a Raspberry Pi, IMU, and CAN hat with connectors for multiple motor drivers + quadrature encoders (hint: the price of those is the inspiration for my newest project)."
   ],
-  "outcome": "Dual reaction wheels · ODrive motor control over CAN",
+  "outcome": "Teaching a robot to stay on its feet.",
   "category": "Robotics",
-  "order": 4,
-  "highlights": [
-    "Designed perpendicular reaction wheels for stabilization in two axes.",
-    "Integrated IMU feedback, Raspberry Pi compute, and a custom 1:8 gearbox."
-  ]
+  "order": 4
 }

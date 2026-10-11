@@ -5,7 +5,7 @@ Official portfolio: https://kunalsk.com/
 I'm Kunal, an electrical engineering student at the University of Illinois Urbana-Champaign. I build robots, embedded systems, and computer vision tools.
 
 Age: 18
-Education: B.S. Electrical Engineering, University of Illinois Urbana-Champaign (2026 — 2030)
+Education: B.S. Electrical Engineering, Minor in Computer Science, University of Illinois Urbana-Champaign (2026 — 2029)
 Interests: Embedded, Controls, Sensing, Mechatronics
 Current book: Steve Jobs — Walter Isaacson
 Song of the day: Memory Box — Peter Cat Recording Co.
@@ -13,11 +13,11 @@ Listen: https://open.spotify.com/track/6C5xm2roWdAIda9WJmu1jG
 Email: kunalkaushik537@gmail.com
 GitHub: https://github.com/kunalk537
 LinkedIn: https://www.linkedin.com/in/kunalkaushik537
-Resume: https://kunalsk.com/Kunal%20Kaushik%20-%20Resume.pdf
+Resume: https://kunalsk.com/Kunal-Kaushik-Electrical-Engineering-Resume.pdf
 
 ## Projects
 
-### FSAE
+### Formula SAE accumulator electronics
 Status: Coming soon
 Category: Robotics
 
@@ -31,7 +31,7 @@ More on this work soon.
 
 
 
-### NMbL lab with Professor Yim
+### Propeller-driven Venus traversal robot
 Status: Coming soon
 Category: Robotics
 
@@ -49,7 +49,7 @@ More on this work soon.
 Status: Coming soon
 Category: Electronics
 
-A closer look at the design and development is coming soon.
+More on this work soon.
 
 
 
@@ -63,19 +63,12 @@ A closer look at the design and development is coming soon.
 Status: Portfolio project
 Category: Robotics
 
-Exploring two-axis stabilization with reaction wheels, IMU feedback, and custom drivetrains.
-Dual reaction wheels · ODrive motor control over CAN
+This project actually started out as a tutoring gig, when my old teacher asked me to help her student with reading and writing. I caught a glimpse of his dad's garage during a session, and found an exciting opportunity to work on humanoids. I worked on a custom gearbox for the wheeled base, designing 3D-printed components for the frame to merge with aluminum inserts. I also was solely responsible for electronics, soldering a perfboard with a Raspberry Pi, IMU, and CAN hat with connectors for multiple motor drivers + quadrature encoders (hint: the price of those is the inspiration for my newest project).
+Teaching a robot to stay on its feet.
 
-- Designed perpendicular reaction wheels for stabilization in two axes.
-- Integrated IMU feedback, Raspberry Pi compute, and a custom 1:8 gearbox.
 
-Reaction wheel system 3D-printed with steel dowels around the edges as weight, perpendicular design enables torque in x and y axis; powered by 180KV motors at 24V, controlled by ODrive S1 over CANbus.
 
-Raspberry Pi used as microcontroller for complex inverse kinematics and controls equations, connected to IMU data via I2C and processing it + computer vision pipeline onboard.
-
-Custom gearbox for driving wheels at 1:8 ratio to maintain stability and torque, utilizing existing motors in slim form-factor through printed modular shell, spur gears, and ball bearings.
-
-Stack: Motor Control, Sensor Fusion, Raspberry Pi, CANbus, Python, Soldering, Crimping, 3D Printing, CAD, Inverse Kinematics, Controls Equations
+This project actually started out as a tutoring gig, when my old teacher asked me to help her student with reading and writing. I caught a glimpse of his dad's garage during a session, and found an exciting opportunity to work on humanoids. I worked on a custom gearbox for the wheeled base, designing 3D-printed components for the frame to merge with aluminum inserts. I also was solely responsible for electronics, soldering a perfboard with a Raspberry Pi, IMU, and CAN hat with connectors for multiple motor drivers + quadrature encoders (hint: the price of those is the inspiration for my newest project).
 
 Media:
 - https://kunalsk.com/NovaHumanoidFinal.mp4
@@ -83,29 +76,20 @@ Media:
 - https://kunalsk.com/nova3.png
 
 
-### AR ski goggle electronics
+### Smart Ski Goggles
 Status: Portfolio project
 Category: Electronics
 
-Designed a compact ESP32 board to bring motion sensing and an OLED display into ski goggles.
-4-layer PCB · IMU + OLED over I2C
+My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.
+Trying to fit a little more into a pair of ski goggles.
 
-- Moved from a perfboard prototype to a compact, four-layer board.
-- Integrated USB-C charging, motion sensing, and a goggle-mounted display.
 
-Prototyped on a perfboard with an ESP32 devboard, moved to PCB to minimize form factor and fit in goggles.
 
-USB-C connector for convenience and future expansion; serves as power source for built-in 3.7V Li-ion battery charging and serial communication port for flashing.
-
-ICM-20948 sensor for IMU feedback with voltage stepped down from 3.3V to 1.8V logic levels; OLED display to create augmented reality effect for information display, both I2C communication
-
-4-layer board (signal, ground, 3.3V, signal) to minimize EMI and maintain impedance, using JLCPCB and component selection through LCSC parts.
-
-Stack: Schematic Design, Component Selection, EasyEDA, ESP32, MPU9050, OLED Display, USB-C Connector, Li-ion Battery, TP4056 Charger, 3D-printed Case
+My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.
 
 Media:
-- https://kunalsk.com/snosight2d.png
 - https://kunalsk.com/snosight3d.png
+- https://kunalsk.com/snosight2d.png
 - https://kunalsk.com/snosight3.png
 
 
@@ -113,46 +97,30 @@ Media:
 Status: Portfolio project
 Category: Robotics
 
-Designed and built a competition robot with custom mechanisms, odometry, and vision-guided alignment.
-5,000+ part assembly · CNC + 3D-printed components
+This is the project where I can confidently say that I know how every single bit of hardware works, down to each screw and trace. I can't count the number of times I had to disassemble the linear slides or differential virtual four bar in the quest for optimization. But of course, there were plenty of electrical complications as well, from the installation of a servo power module to prevent voltage droop and the resoldering of a battery connector to recover the $300 REV Control Hub. Despite the hardware challenge, it was the leadership trials that took the cake; leading 7 people with different strengths, backgrounds, and personalities all while trying to develop a culture on the fly was certainly a novel experience.
+A robot, a team, and a lot of moving parts.
 
-- Custom CNC chassis, mecanum drivetrain, and sprung odometry.
-- Vision-guided intake and multi-stage slides for manipulating game pieces.
 
-Chassis: Belt-driven mecanum wheel drivetrain with 4x 12V 435 RPM DC motors at 1:1 ratio, with two-wheel sprung odometry for precise mapping of field movements. Custom CNC-milled aluminum + polycarbonate chassis to balance weight and structural integrity.
 
-Intake: Servo-powered linkage driving 3-stage linear slides to intake game pieces at distance. Virtual four-bar geared 2:1 for speedy movement of claw, which has computer vision controlled-yaw to align with rectangular game pieces.
-
-Outtake: Four-stage linear slides driven by 2x 12V 312 RPM DC motors with pulley system and kevlar cascade stringing. Second virtual four-bar geared 1:1 with claw to quickly deposit game pieces into basket.
-
-Stack: 3D Printing, CNC Milling, Design + Prototyping, Assembly, Soldering, Wiring, Physics + Kinematics, Iteration, Component Selection
+This is the project where I can confidently say that I know how every single bit of hardware works, down to each screw and trace. I can't count the number of times I had to disassemble the linear slides or differential virtual four bar in the quest for optimization. But of course, there were plenty of electrical complications as well, from the installation of a servo power module to prevent voltage droop and the resoldering of a battery connector to recover the $300 REV Control Hub. Despite the hardware challenge, it was the leadership trials that took the cake; leading 7 people with different strengths, backgrounds, and personalities all while trying to develop a culture on the fly was certainly a novel experience.
 
 Media:
+- https://kunalsk.com/riftresume.png
 - https://kunalsk.com/rift1.png
 - https://kunalsk.com/rift3.mp4
 - https://kunalsk.com/rift2.png
-- https://kunalsk.com/riftresume.png
 
 
-### Motor driver & sensor board
+### Peripheral Breakout Board
 Status: Portfolio project
 Category: Electronics
 
-Built an ESP32 breakout board that brings motor control, servo connections, and motion sensing together.
-Custom 4-layer PCB · H-bridge + 9-axis IMU
+This board brings an ESP32, a motor driver, servo connections, and motion sensing into one place. I designed the schematic and four-layer PCB around the practical question of how to power and connect all of those pieces. While the original project the board was intended for was scrapped (an educational toy car), the utility of this right here has been endless. I can't count how many times I've used it to quickly hook up a servo or a couple motors - for sure more than I expected.
+Giving motors and sensors a board of their own.
 
-- Integrated an H-bridge, servo port, and motion sensing around an ESP32.
-- Designed power regulation and wireless firmware update support.
 
-Powered by a microUSB connector, with 5V battery and LDO to step down to 1.8V for IMU logic levels; ESP32 and servo both at 3.3V.
 
-ESP32 serial communication empowered directly through the devboard; initialized with Wi-fi setup to enable wireless flashing and code improvements.
-
-H-bridge motor driver for motor control enables basic speed and direction control; used with cheaper motors so IMU serves as encoder replacement to guarantee motion.
-
-4-layer board (signal, ground, 3.3V, signal) to minimize EMI and maintain impedance, using JLCPCB and component selection through LCSC parts.
-
-Stack: Embedded, PCB Design, Motor Control, I2C, C/C++, Soldering, 4-layer
+This board brings an ESP32, a motor driver, servo connections, and motion sensing into one place. I designed the schematic and four-layer PCB around the practical question of how to power and connect all of those pieces. While the original project the board was intended for was scrapped (an educational toy car), the utility of this right here has been endless. I can't count how many times I've used it to quickly hook up a servo or a couple motors - for sure more than I expected.
 
 Media:
 - https://kunalsk.com/rumble1.png
@@ -163,21 +131,12 @@ Media:
 Status: Portfolio project
 Category: Computer vision
 
-Trained a computer vision model to identify misaligned semiconductor wafers from microscope images.
-0.95 F1 score · 1,600-image augmented dataset
+I explored whether computer vision could spot misalignment in semiconductor wafer images. That meant collecting and labeling 560 microscope images, working around an uneven dataset, and training a YOLOv9 model. The model reached a reported F1 score of 0.95 on the project dataset, but only after over 30 different iterations with over 6000 total epochs of training. For a problem that is on such a microscopic scale, getting it this accurate required a whole lot of persistence. It was worth it though - just imagine how useful this could be.
+Looking for tiny mistakes through a microscope.
 
-- Built and augmented a microscope-image dataset, then trained YOLOv9 on an A100 GPU.
-- Evaluated alignment detection with precision, recall, and F1.
 
-Improper wafer alignment during semiconductor manufacturing decreases yield, with current solutions being expensive and physically bulky; CV as a solution.
 
-Built dataset using microscope images, annotated with bounding boxes(p: perfectly aligned, n: not aligned) to create 560 image dataset. Heavy class imbalance necessitated augmentation with grayscale, rotation, and color corrections; 1600 images in total.
-
-Custom YoloV9 model trained on dataset with 80/10/10 split for training, validation, and test; Training done on Google Colab with 1000 epochs, batch size -1, patience 15, + more; Trained + tested on A100 GPU through Google Colab.
-
-Performance metrics calculated with confusion matrix and accuracy, precision, recall, and F1 score. Model achieved F1 of .95, Precision of .962, Recall of .936, overall accuracy of .95.
-
-Stack: Dataset Managment, YOLO V9, Computer Vision Pipeline, Python, Google Colab, A100 GPU, Results Analysis, Class Imbalance Handling
+I explored whether computer vision could spot misalignment in semiconductor wafer images. That meant collecting and labeling 560 microscope images, working around an uneven dataset, and training a YOLOv9 model. The model reached a reported F1 score of 0.95 on the project dataset, but only after over 30 different iterations with over 6000 total epochs of training. For a problem that is on such a microscopic scale, getting it this accurate required a whole lot of persistence. It was worth it though - just imagine how useful this could be.
 
 Media:
 - https://kunalsk.com/semiconductor3.jpg

@@ -1,11 +1,11 @@
 {
   "id": "fsae",
-  "title": "FSAE",
+  "title": "Formula SAE accumulator electronics",
   "summary": "More on this work soon.",
   "category": "Robotics",
   "order": 1,
-  "status": "coming-soon",
   "tags": [],
   "media": [],
-  "paragraphs": []
+  "paragraphs": [],
+  "status": "coming-soon"
 }

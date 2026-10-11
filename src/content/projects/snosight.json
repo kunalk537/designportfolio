@@ -1,7 +1,7 @@
 {
   "id": "snosight",
-  "title": "AR ski goggle electronics",
-  "summary": "Designed a compact ESP32 board to bring motion sensing and an OLED display into ski goggles.",
+  "title": "Smart Ski Goggles",
+  "summary": "My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix.",
   "tags": [
     "Embedded",
     "PCB Design",
@@ -11,22 +11,18 @@
     "Soldering"
   ],
   "media": [
+    {
+      "src": "/snosight3d.png",
+      "alt": "Assembled SnoSight electronics board",
+      "caption": "The assembled SnoSight board"
+    },
     "/snosight2d.png",
-    "/snosight3d.png",
     "/snosight3.png"
   ],
   "paragraphs": [
-    "Prototyped on a perfboard with an ESP32 devboard, moved to PCB to minimize form factor and fit in goggles.",
-    "USB-C connector for convenience and future expansion; serves as power source for built-in 3.7V Li-ion battery charging and serial communication port for flashing.",
-    "ICM-20948 sensor for IMU feedback with voltage stepped down from 3.3V to 1.8V logic levels; OLED display to create augmented reality effect for information display, both I2C communication",
-    "4-layer board (signal, ground, 3.3V, signal) to minimize EMI and maintain impedance, using JLCPCB and component selection through LCSC parts.",
-    "Stack: Schematic Design, Component Selection, EasyEDA, ESP32, MPU9050, OLED Display, USB-C Connector, Li-ion Battery, TP4056 Charger, 3D-printed Case"
+    "My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix."
   ],
-  "outcome": "4-layer PCB · IMU + OLED over I2C",
+  "outcome": "Trying to fit a little more into a pair of ski goggles.",
   "category": "Electronics",
-  "order": 5,
-  "highlights": [
-    "Moved from a perfboard prototype to a compact, four-layer board.",
-    "Integrated USB-C charging, motion sensing, and a goggle-mounted display."
-  ]
+  "order": 5
 }
