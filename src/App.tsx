@@ -197,6 +197,36 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   </article>
 }
 
+function ScrollCue() {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const work = document.getElementById('work')
+    if (!work) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const bounds = work.getBoundingClientRect()
+      setVisible(bounds.top < window.innerHeight - 100 && bounds.bottom > window.innerHeight + 40)
+    }
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }
+    const resize = new ResizeObserver(schedule)
+    resize.observe(work)
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    schedule()
+    return () => {
+      cancelAnimationFrame(frame)
+      resize.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [])
+  return visible && <button type="button" className="scroll-cue" aria-label="Scroll down to see more projects" onClick={() => window.scrollBy({ top: window.innerHeight * .65, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>
+    <span>more from the workbench</span>
+    <svg viewBox="0 0 32 42" fill="none" aria-hidden="true"><path d="M10 3L26 19l-9 1 5 11-5 2-5-11-7 6 5-25Z" /><path className="scroll-cue-arrow" d="M9 34v6m-4-4 4 4 4-4" /></svg>
+  </button>
+}
+
 export default function App() {
   return <>
     <div className="notebook-binding" aria-hidden="true" />
@@ -244,6 +274,7 @@ export default function App() {
       <section className="contact" aria-labelledby="contact-heading"><span className="contact-star" aria-hidden="true">✳</span><div><h2 id="contact-heading">Let’s make something good.</h2><a href={profile.links.emailHref}>Say hello ↗</a></div></section>
       <footer><p>{profile.name}, {new Date().getFullYear()}.</p><p>Plain text for agents at <a href="/ai/">/ai</a>, with <a href="/llms.txt">llms.txt</a> and <a href="/llms-full.txt">llms-full.txt</a>.</p></footer>
     </main>
+    <ScrollCue />
   </>
 }
 
