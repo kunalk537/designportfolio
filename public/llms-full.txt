@@ -73,7 +73,7 @@ This project actually started out as a tutoring gig, when my old teacher asked m
 Media:
 - https://kunalsk.com/NovaHumanoidFinal.mp4
 - https://kunalsk.com/nova1.png
-- https://kunalsk.com/nova3.png
+- https://kunalsk.com/nova-gearbox-studio.png
 
 
 ### FTC competition robot

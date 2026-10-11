@@ -25,8 +25,9 @@
       "caption": "Reaction wheels"
     },
     {
-      "src": "/nova3.png",
-      "caption": "Inside the gearbox"
+      "src": "/nova-gearbox-studio.png",
+      "caption": "Inside the gearbox",
+      "alt": "Inside the custom gearbox, with lighting enhanced"
     }
   ],
   "paragraphs": [
