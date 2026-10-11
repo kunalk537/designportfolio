@@ -13,6 +13,11 @@
   ],
   "media": [
     {
+      "src": "/rift3.mp4",
+      "alt": "FTC robot demonstration",
+      "caption": "In motion"
+    },
+    {
       "src": "/riftresume.png",
       "alt": "Full FTC robot assembly with intake, slide mechanisms, and mecanum chassis",
       "caption": "The whole robot"
@@ -25,11 +30,6 @@
     {
       "src": "/rift1.png",
       "caption": "Under the hood"
-    },
-    {
-      "src": "/rift3.mp4",
-      "alt": "FTC robot demonstration",
-      "caption": "In motion"
     },
     {
       "src": "/rift2.png",
