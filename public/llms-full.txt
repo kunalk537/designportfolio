@@ -110,7 +110,7 @@ Media:
 - https://kunalsk.com/snosight-headshot.jpg
 - https://kunalsk.com/snosight-goggles.jpg
 - https://kunalsk.com/snosight3d.png
-- https://kunalsk.com/snosight2d.png
+- https://kunalsk.com/snosight-debugging.png
 
 
 ### Peripheral Breakout Board

@@ -27,8 +27,9 @@
       "caption": "The tiny board"
     },
     {
-      "src": "/snosight2d.png",
-      "caption": "Routing everything"
+      "src": "/snosight-debugging.png",
+      "alt": "Checking the SnoSight board with a multimeter; display edited to -1.47",
+      "caption": "Bench debugging"
     }
   ],
   "paragraphs": [
