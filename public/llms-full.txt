@@ -123,8 +123,8 @@ Giving motors and sensors a board of their own.
 This board brings an ESP32, a motor driver, servo connections, and motion sensing into one place. I designed the schematic and four-layer PCB around the practical question of how to power and connect all of those pieces. While the original project the board was intended for was scrapped (an educational toy car), the utility of this right here has been endless. I can't count how many times I've used it to quickly hook up a servo or a couple motors - for sure more than I expected.
 
 Media:
+- https://kunalsk.com/peripheral-breakout-board.png
 - https://kunalsk.com/rumble1.png
-- https://kunalsk.com/rumble2.png
 
 
 ### Wafer alignment detection
