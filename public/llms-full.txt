@@ -144,7 +144,7 @@ Media:
 - https://kunalsk.com/semiconductor3.jpg
 - https://kunalsk.com/semiconductor1.jpg
 - https://kunalsk.com/semiconductor2.png
-- https://kunalsk.com/semiconductor4.png
+- https://kunalsk.com/wafer-training-log.png
 
 
 Coming-soon entries are placeholders, not claims of completed work. All metrics are self-reported.
