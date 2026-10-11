@@ -12,12 +12,16 @@
   ],
   "media": [
     {
+      "src": "/snosight-goggles.jpg",
+      "alt": "SnoSight smart ski goggles prototype with display and connected electronics",
+      "caption": "The SnoSight goggles prototype"
+    },
+    {
       "src": "/snosight3d.png",
       "alt": "Assembled SnoSight electronics board",
       "caption": "The assembled SnoSight board"
     },
-    "/snosight2d.png",
-    "/snosight3.png"
+    "/snosight2d.png"
   ],
   "paragraphs": [
     "My friend and I spotted a pair of AR ski goggles on Shark Tank, and were excited to order them until we saw the price tag of $350. We set about making our own version, which could either be in a custom 3D-printed format or retrofitted into any pair of goggles (which we almost immediately realized was a better idea). The difficulty came with the harsh environment the electronics would be subjected to and the small form factor. The AR effect was created with an OLED screen and a laminate on the goggles themselves, all powered by a custom PCB I slaved away for hours to create, and spent even more hours trying to fix."
