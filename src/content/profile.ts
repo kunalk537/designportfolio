@@ -42,7 +42,7 @@ export const profile = {
   links: {
     email: 'kunalkaushik537@gmail.com',
     emailHref:
-      'mailto:kunalkaushik537@gmail.com?subject=Hello%20from%20your%20portfolio',
+      'https://mail.google.com/mail/?view=cm&fs=1&to=kunalkaushik537%40gmail.com&su=Hello%20from%20your%20portfolio',
     github: 'https://github.com/kunalk537',
     linkedin: 'https://www.linkedin.com/in/kunalkaushik537',
     resume: '/Kunal-Kaushik-Electrical-Engineering-Resume.pdf',
